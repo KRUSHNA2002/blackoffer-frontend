@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
+import Spinner from '../dashboard/Spinner';
 
 const Bars = () => {
   const [originalInsights, setOriginalInsights] = useState([]);
@@ -43,13 +44,14 @@ const Bars = () => {
     setFilteredInsights(newFilteredInsights);
   };
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}><Spinner /></div>; 
+
   if (error) return <p>Error: {error}</p>;
 
   // Prepare data for Highcharts
   const chartOptions = {
     title: {
-      text: 'Data Visualization Bars'
+      text: 'Data Visualization Dashboard '
     },
     xAxis: {
       categories: filteredInsights.map(insight => insight.pestle),
@@ -71,11 +73,11 @@ const Bars = () => {
   };
 
   return (
-    <div>
+    <div id='country'>
       {/* Filter inputs */}
       <div className="row mt-5 mb-5 d-flex justify-content-center">
         <div className="col-md-6 col-12">
-          <h6 className="col-md-12 text-center">Filter by Country:</h6>
+          <h4 className="col-md-12 text-center text-secondary">Filter by Country:</h4>
           <div className="col-md-12">
 
             <select className='form-control text-center' onChange={handleFilterChange} name="country" id="country">

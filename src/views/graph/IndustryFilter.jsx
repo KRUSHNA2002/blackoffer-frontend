@@ -3,8 +3,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
+import Spinner from '../dashboard/Spinner';
 
-const  Industry_filter= () => {
+const IndustryFilter = () => {
   const [originalInsights, setOriginalInsights] = useState([]);
   const [filteredInsights, setFilteredInsights] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -44,7 +45,8 @@ const  Industry_filter= () => {
     setFilteredInsights(newFilteredInsights);
   };
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}><Spinner /></div>;
+
   if (error) return <p>Error: {error}</p>;
 
   // Prepare data for Highcharts
@@ -53,7 +55,7 @@ const  Industry_filter= () => {
       type: 'bar' // Use bar chart type
     },
     title: {
-      text: 'Data Visualization Bars'
+      text: 'Data Visualization Dashboard'
     },
     xAxis: {
       categories: filteredInsights.map(insight => insight.region),
@@ -75,14 +77,14 @@ const  Industry_filter= () => {
   };
 
   return (
-    <div>
+    <div id='pestle'>
       {/* Filter inputs */}
       <div className="row mt-5 mb-5 d-flex justify-content-center">
         <div className="col-md-6 col-12">
-          <h6 className="col-md-12 text-center">Filter by Pestle:</h6>
+          <h4 className="col-md-12 text-center text-secondary">Filter by Pestle:</h4>
           <div className="col-md-12">
-                        <select className='form-control text-center' onChange={handleFilterChange} name="pestle" id="pestle">
-               <option>Tap to Year for filter Data</option>
+            <select className='form-control text-center' onChange={handleFilterChange} name="pestle" id="pestle">
+              <option>Tap to Year for filter Data</option>
 
               {[...new Set(originalInsights.map(item => item.pestle))].map((pestle, index) => (
                 <option key={index} value={pestle}>{pestle}</option>
@@ -94,7 +96,7 @@ const  Industry_filter= () => {
           </div>
         </div>
       </div>
-      
+
       {/* Render the Highcharts chart */}
       <div>
         <HighchartsReact highcharts={Highcharts} options={chartOptions} />
@@ -103,4 +105,4 @@ const  Industry_filter= () => {
   );
 };
 
-export default Industry_filter;
+export default IndustryFilter;
