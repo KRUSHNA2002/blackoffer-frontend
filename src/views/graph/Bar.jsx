@@ -18,7 +18,7 @@ const Bars = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('https://blackoffer-backend.vercel.app/api/insights');
+        const response = await axios.get('https://blackoffer-backend.vercel.app//api/insights');
         setOriginalInsights(response.data);
         setFilteredInsights(response.data); // Initialize filtered data with original data
         setLoading(false);
